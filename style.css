@@ -108,9 +108,11 @@ body {
 }
 
 .stats-summary {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
 }
 
 .stats-summary h3 {
@@ -259,7 +261,8 @@ button {
 /* Calendar/List View */
 .calendar-view {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Smaller min-width */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    /* Smaller min-width */
     gap: 0.75rem;
     padding-bottom: 2rem;
 }
@@ -268,7 +271,8 @@ button {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 0.75rem; /* Reduced padding */
+    padding: 0.75rem;
+    /* Reduced padding */
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
@@ -416,7 +420,7 @@ button {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 0.5rem;
     }
-    
+
     .day-card {
         padding: 0.5rem;
     }

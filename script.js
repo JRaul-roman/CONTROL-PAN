@@ -65,14 +65,30 @@ function renderSidebar() {
         };
         nav.appendChild(btn);
     });
-    
+
+    // Append Annual Summary here
+    const summaryDiv = document.createElement('div');
+    summaryDiv.className = 'stats-summary';
+    summaryDiv.innerHTML = `
+        <h3>Resumen Anual</h3>
+        <div class="stat-item">
+            <span>Barras</span>
+            <span id="totalYearBarras">0</span>
+        </div>
+        <div class="stat-item">
+            <span>Bocadillos</span>
+            <span id="totalYearBocadillos">0</span>
+        </div>
+    `;
+    nav.appendChild(summaryDiv);
+
     updateStats();
 }
 
 function renderMonth(monthIndex) {
     const container = document.getElementById('daysContainer');
     const title = document.getElementById('currentMonthTitle');
-    
+
     container.innerHTML = '';
     title.textContent = MONTHS[monthIndex];
 
@@ -85,7 +101,7 @@ function renderMonth(monthIndex) {
 
         const card = document.createElement('div');
         card.className = 'day-card';
-        
+
         // Highlight weekends
         if (date.getDay() === 0 || date.getDay() === 6) {
             card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
@@ -118,7 +134,7 @@ function renderMonth(monthIndex) {
         `;
         container.appendChild(card);
     }
-    
+
     updateStats();
 }
 
@@ -143,14 +159,16 @@ function updateStats() {
     let mBarras = 0;
     let mBocadillos = 0;
     const daysInMonth = new Date(2026, currentMonth + 1, 0).getDate();
-    
+
     for (let d = 1; d <= daysInMonth; d++) {
         mBarras += appData[currentMonth][d].barras;
         mBocadillos += appData[currentMonth][d].bocadillos;
     }
 
-    document.getElementById('monthTotalBarras').textContent = mBarras.toLocaleString();
-    document.getElementById('monthTotalBocadillos').textContent = mBocadillos.toLocaleString();
+    const elMBarras = document.getElementById('monthTotalBarras');
+    const elMBocadillos = document.getElementById('monthTotalBocadillos');
+    if (elMBarras) elMBarras.textContent = mBarras.toLocaleString();
+    if (elMBocadillos) elMBocadillos.textContent = mBocadillos.toLocaleString();
 
     // Yearly Stats
     let yBarras = 0;
@@ -164,14 +182,16 @@ function updateStats() {
         }
     }
 
-    document.getElementById('totalYearBarras').textContent = yBarras.toLocaleString();
-    document.getElementById('totalYearBocadillos').textContent = yBocadillos.toLocaleString();
+    const elYBarras = document.getElementById('totalYearBarras');
+    const elYBocadillos = document.getElementById('totalYearBocadillos');
+    if (elYBarras) elYBarras.textContent = yBarras.toLocaleString();
+    if (elYBocadillos) elYBocadillos.textContent = yBocadillos.toLocaleString();
 }
 
 function setupEventListeners() {
     document.getElementById('exportBtn').addEventListener('click', exportToCSV);
     document.getElementById('resetBtn').addEventListener('click', () => {
-        if(confirm('¿Estás seguro de que quieres borrar todos los datos? Esta acción no se puede deshacer.')) {
+        if (confirm('¿Estás seguro de que quieres borrar todos los datos? Esta acción no se puede deshacer.')) {
             generateEmptyData();
             renderMonth(currentMonth);
         }
@@ -185,7 +205,7 @@ function exportToCSV() {
     for (let m = 0; m < 12; m++) {
         const dCount = new Date(2026, m + 1, 0).getDate();
         for (let d = 1; d <= dCount; d++) {
-            const date = `${d}/${m+1}/2026`;
+            const date = `${d}/${m + 1}/2026`;
             const row = [
                 date,
                 MONTHS[m],
