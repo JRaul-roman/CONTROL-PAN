@@ -109,8 +109,7 @@ function renderMonth(monthIndex) {
 
         // Highlight weekends
         if (date.getDay() === 0 || date.getDay() === 6) {
-            card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-            card.style.backgroundColor = 'rgba(255, 255, 255, 0.02)';
+            card.classList.add('weekend');
         }
 
         card.innerHTML = `
