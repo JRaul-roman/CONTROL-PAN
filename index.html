@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Pan 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-bread-slice"></i>
+                <h1>PanControl <span class="year">2026</span></h1>
+            </div>
+            <nav class="month-nav" id="monthNav">
+                <!-- Months will be generated here -->
+            </nav>
+            <div class="stats-summary">
+                <h3>Resumen Anual</h3>
+                <div class="stat-item">
+                    <span>Barras</span>
+                    <span id="totalYearBarras">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Bocadillos</span>
+                    <span id="totalYearBocadillos">0</span>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="top-bar">
+                <h2 id="currentMonthTitle">Enero</h2>
+                <div class="actions">
+                    <button id="exportBtn" class="btn-primary"><i class="fa-solid fa-file-export"></i> Exportar CSV</button>
+                    <button id="resetBtn" class="btn-secondary"><i class="fa-solid fa-rotate-right"></i> Resetear</button>
+                </div>
+            </header>
+            
+            <div class="dashboard-grid">
+                <div class="month-stats">
+                    <div class="card stat-card">
+                        <div class="icon-box barra-icon">
+                            <i class="fa-solid fa-baguette"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="label">Total Barras (Mes)</span>
+                            <span class="value" id="monthTotalBarras">0</span>
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="icon-box bocadillo-icon">
+                            <i class="fa-solid fa-burger"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="label">Total Bocadillos (Mes)</span>
+                            <span class="value" id="monthTotalBocadillos">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-view" id="daysContainer">
+                    <!-- Days will be generated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
