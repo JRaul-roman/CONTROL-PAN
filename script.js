@@ -102,6 +102,11 @@ function renderMonth(monthIndex) {
         const card = document.createElement('div');
         card.className = 'day-card';
 
+        // Check if empty (highlight needed)
+        if (dayData.barras === 0 && dayData.bocadillos === 0) {
+            card.classList.add('empty-day');
+        }
+
         // Highlight weekends
         if (date.getDay() === 0 || date.getDay() === 6) {
             card.style.borderColor = 'rgba(255, 255, 255, 0.1)';

@@ -285,6 +285,11 @@ button {
     border-color: var(--accent-color);
 }
 
+.day-card.empty-day {
+    border: 2px dashed rgba(239, 68, 68, 0.6);
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
 .day-header {
     display: flex;
     justify-content: space-between;
