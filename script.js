@@ -95,18 +95,24 @@ function renderMonth(monthIndex) {
         card.innerHTML = `
             <div class="day-header">
                 <span class="day-number">${d}</span>
-                <span class="day-name">${dayName}</span>
+                <span class="day-name">${dayName.substring(0, 3)}</span>
             </div>
             <div class="day-inputs">
-                <div class="input-group">
-                    <label><i class="fa-solid fa-baguette" style="color: var(--accent-color)"></i> Barras</label>
-                    <input type="number" min="0" value="${dayData.barras}" 
-                        onchange="updateValue(${monthIndex}, ${d}, 'barras', this.value)">
+                <div class="input-group barras">
+                    <span class="input-label"><i class="fa-solid fa-baguette" style="color: var(--accent-color); font-size: 0.8em;"></i> Barras</span>
+                    <div class="quantity-control">
+                        <button class="stepper-btn" onclick="updateValueRelative(${monthIndex}, ${d}, 'barras', -1)"><i class="fa-solid fa-minus"></i></button>
+                        <span class="quantity-badge">${dayData.barras}</span>
+                        <button class="stepper-btn" onclick="updateValueRelative(${monthIndex}, ${d}, 'barras', 1)"><i class="fa-solid fa-plus"></i></button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label><i class="fa-solid fa-burger" style="color: var(--success)"></i> Bocadillos</label>
-                    <input type="number" min="0" value="${dayData.bocadillos}" 
-                        onchange="updateValue(${monthIndex}, ${d}, 'bocadillos', this.value)">
+                <div class="input-group bocadillos">
+                    <span class="input-label"><i class="fa-solid fa-burger" style="color: var(--success); font-size: 0.8em;"></i> Bocadillos</span>
+                    <div class="quantity-control">
+                        <button class="stepper-btn" onclick="updateValueRelative(${monthIndex}, ${d}, 'bocadillos', -1)"><i class="fa-solid fa-minus"></i></button>
+                        <span class="quantity-badge">${dayData.bocadillos}</span>
+                        <button class="stepper-btn" onclick="updateValueRelative(${monthIndex}, ${d}, 'bocadillos', 1)"><i class="fa-solid fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         `;
@@ -119,6 +125,17 @@ function renderMonth(monthIndex) {
 function updateValue(month, day, type, value) {
     appData[month][day][type] = parseInt(value) || 0;
     saveData();
+}
+
+function updateValueRelative(month, day, type, change) {
+    const current = appData[month][day][type];
+    const newValue = Math.max(0, current + change); // Prevent negative
+    appData[month][day][type] = newValue;
+    saveData();
+    // Re-render only this month to reflect changes (simple brute force for now)
+    renderMonth(month);
+    // Note: optimization could be to just update the specific DOM element, 
+    // but renderMonth is fast enough for this scale.
 }
 
 function updateStats() {

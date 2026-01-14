@@ -259,8 +259,8 @@ button {
 /* Calendar/List View */
 .calendar-view {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Smaller min-width */
+    gap: 0.75rem;
     padding-bottom: 2rem;
 }
 
@@ -268,8 +268,11 @@ button {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1rem;
+    padding: 0.75rem; /* Reduced padding */
     transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .day-card:hover {
@@ -282,18 +285,18 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .day-number {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .day-name {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     text-transform: uppercase;
 }
@@ -301,39 +304,69 @@ button {
 .day-inputs {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
 }
 
 .input-group {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
-.input-group label {
-    font-size: 0.9rem;
+.input-label {
+    font-size: 0.75rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
-.input-group input {
-    width: 80px;
+/* New Quantity Controls */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    padding: 0.4rem;
-    color: var(--text-primary);
-    text-align: center;
-    font-family: inherit;
-    font-weight: 500;
+    padding: 0.15rem;
+    border: 1px solid var(--border-color);
 }
 
-.input-group input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    background-color: rgba(0, 0, 0, 0.3);
+.stepper-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.stepper-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.quantity-badge {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Specific Badge Styles for "Bocadillos" feel */
+.input-group.barras .quantity-badge {
+    color: var(--accent-color);
+}
+
+.input-group.bocadillos .quantity-badge {
+    color: var(--success);
 }
 
 /* Scrollbar */
@@ -380,22 +413,12 @@ button {
     }
 
     .calendar-view {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 0.75rem;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.5rem;
     }
-
+    
     .day-card {
-        padding: 0.75rem;
-    }
-
-    .input-group label {
-        font-size: 0.8rem;
-    }
-
-    .input-group input {
-        width: 60px;
-        padding: 0.25rem;
-        font-size: 0.9rem;
+        padding: 0.5rem;
     }
 
     .stat-info .value {
