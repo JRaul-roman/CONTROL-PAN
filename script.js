@@ -8,7 +8,7 @@ const DAYS_OF_WEEK = [
 ];
 
 let appData = {};
-let currentMonth = 0; // 0-indexed (Jan = 0)
+let currentMonth = new Date().getMonth(); // 0-indexed (Jan = 0)
 
 document.addEventListener('DOMContentLoaded', () => {
     init();
@@ -194,12 +194,80 @@ function updateStats() {
 
 function setupEventListeners() {
     document.getElementById('exportBtn').addEventListener('click', exportToCSV);
+    
+    // Import CSV logic
+    const importBtn = document.getElementById('importBtn');
+    const importFile = document.getElementById('importFile');
+    
+    importBtn.addEventListener('click', () => {
+        importFile.click();
+    });
+    
+    importFile.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const text = e.target.result;
+                processCSV(text);
+            };
+            reader.readAsText(file);
+        }
+        // Reset the input so the same file can be selected again
+        event.target.value = '';
+    });
+
     document.getElementById('resetBtn').addEventListener('click', () => {
         if (confirm('¿Estás seguro de que quieres borrar todos los datos? Esta acción no se puede deshacer.')) {
             generateEmptyData();
             renderMonth(currentMonth);
         }
     });
+}
+
+function processCSV(csvText) {
+    // Basic CSV parser
+    const lines = csvText.split('\n');
+    if (lines.length < 2) return;
+    
+    let importedData = {};
+    // Initialize empty object structure
+    for (let m = 0; m < 12; m++) {
+        const daysInMonth = new Date(2026, m + 1, 0).getDate();
+        importedData[m] = {};
+        for (let d = 1; d <= daysInMonth; d++) {
+            importedData[m][d] = { barras: 0, bocadillos: 0 };
+        }
+    }
+
+    // Skip the header line (index 0)
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        
+        const parts = line.split(',');
+        if (parts.length >= 5) {
+            // Format: Fecha,Mes,Dia,Barras,Bocadillos
+            const monthText = parts[1];
+            const day = parseInt(parts[2]);
+            const barras = parseInt(parts[3]) || 0;
+            const bocadillos = parseInt(parts[4]) || 0;
+            
+            const monthIndex = MONTHS.indexOf(monthText);
+            
+            if (monthIndex !== -1 && !isNaN(day)) {
+                if (importedData[monthIndex][day]) {
+                    importedData[monthIndex][day].barras = barras;
+                    importedData[monthIndex][day].bocadillos = bocadillos;
+                }
+            }
+        }
+    }
+    
+    appData = importedData;
+    saveData();
+    renderMonth(currentMonth);
+    alert('Datos importados correctamente.');
 }
 
 function exportToCSV() {
